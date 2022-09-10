@@ -6,4 +6,4 @@
 [The Rust Programming Language](https://doc.rust-lang.org/book/)
 
 # License
-All code written by me is under an Apache-2.0 styled license.
+All code written by me is under an Apache-2.0 styled license, please see [LICENSE](https://github.com/willeagren/edurust/blob/main/LICENSE) for more information.
