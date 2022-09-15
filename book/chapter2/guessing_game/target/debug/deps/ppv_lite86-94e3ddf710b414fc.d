@@ -1,0 +1,11 @@
+/mnt/c/Users/WIAG01/Coding/Rust/edurust/book/chapter2/guessing_game/target/debug/deps/ppv_lite86-94e3ddf710b414fc.rmeta: /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/lib.rs /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/soft.rs /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/types.rs /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/x86_64/mod.rs /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/x86_64/sse2.rs
+
+/mnt/c/Users/WIAG01/Coding/Rust/edurust/book/chapter2/guessing_game/target/debug/deps/libppv_lite86-94e3ddf710b414fc.rlib: /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/lib.rs /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/soft.rs /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/types.rs /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/x86_64/mod.rs /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/x86_64/sse2.rs
+
+/mnt/c/Users/WIAG01/Coding/Rust/edurust/book/chapter2/guessing_game/target/debug/deps/ppv_lite86-94e3ddf710b414fc.d: /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/lib.rs /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/soft.rs /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/types.rs /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/x86_64/mod.rs /home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/x86_64/sse2.rs
+
+/home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/lib.rs:
+/home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/soft.rs:
+/home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/types.rs:
+/home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/x86_64/mod.rs:
+/home/wiag01/.cargo/registry/src/github.com-1ecc6299db9ec823/ppv-lite86-0.2.16/src/x86_64/sse2.rs:
