@@ -209,4 +209,103 @@ resource can implement `Copy`. Here are some types that implement `Copy`:
 
 
 ## Ownership and Functions
-The mechanics...
+The mechanics of passing a value to a function are similar to those when
+passing a value to a variable. Passing a variable to a function will move or
+copy, just as assignment does. Below is an example with some annotations
+showing where variables go into and out of scope:
+```rust
+fn main() {
+    let s = String::from("hello");      // s comes into scope
+
+    takes_ownership(s);                 // s's value moves into the function...
+                                        // ... and so is no longer valid here
+
+    let x = 5;                          // x comes into scope
+
+    makes_copy(x);                      // x would move into the function,
+                                        // but i32 is Copy, so it's okay to
+                                        // still use x afterward
+    
+}  // Here, x goes out of scope, then s. But because s's value was moved,
+   // nothing special happens.
+
+fn takes_ownership(some_string: String) {  // some_string comes into scope
+    println!("{}", some_string);
+}  // Here, some_string goes out of scope and 'drop' is called. The backing
+   // memory is freed.
+
+fn makes_copy(some_integer: i32) {  // some_integer comes into scope
+    println!("{}", some_integer);
+}  // Here, some_integer goes out of scope. Nothing special happens.
+```
+If we tried to use `s` after the call to `takes_ownership`, Rust would throw a
+compile-time error. These static checks protect us from mistakes. 
+
+
+## Return Values and Scope
+Returning values can also tranfer ownership. Below is an example of a function
+that returns some value:
+```rust
+fn main() {
+    let s1 = gives_ownership();         // gives_ownership moves its return
+                                        // value into s1
+
+    let s2 = String::from("hello");     // s2 comes into scope
+
+    let s3 = takes_and_gives_back(s2);  // s2 is moved into
+                                        // takes_and_gives_back, which also
+                                        // moves its return value into s3
+}  // Here, s3 goes out of scope and is dropped. s2 was moved, so nothing
+   // happens. s1 goes out of scope and is dropped.
+
+fn gives_ownership() -> String {        // gives_ownership will move its
+                                        // return value into the function
+                                        // that calls it
+
+    let s = String::from("hello");      // s comes into scope
+    
+    s                                   // s is returned and moves out
+                                        // to the calling function
+}
+
+fn takes_and_gives_back(a_string: String) -> String {  // a_string comes into 
+                                                       // scope
+
+    a_string                            // a_string is returned and moves out
+                                        // to the calling function
+}
+
+```
+The ownership of variable follows the same pattern every time: assigning a
+value to another variable moves it. When a variable that includes data on the
+heap goes out of scope, the value will be cleaned up by `drop` unless ownership
+of the data has been moved to another variable.
+
+
+While this works, taking ownership and then returning ownership with every
+function is a bit tedious. What if we want to let a function use a value but
+not take ownership? It's quite annoying that anything we pass in also needs to
+be passed back if we want to use it again, in addition to any data resulting
+from the body of the function that we might want to return as well.
+
+
+Rust does let us return multiple values using a tuple, as shown below.
+```rust
+fn main() {
+    let s1 = String::from("hello");
+    
+    let (s2, len) = calculate_length(s1);
+
+    println!("The length of '{}' is {}.", s2, len);
+}
+
+fn calculate_length(s: String) -> (String, usize) {
+    let length = s.len();               // len() returns the length
+                                        // of the string
+
+    (s, length)
+}
+```
+But this is too much ceremony and a lot of work for a concept that should be
+common. Luckily for us, Rust has a feature for using a value without
+trasnferring ownership, called *references*.
