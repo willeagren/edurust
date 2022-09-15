@@ -308,4 +308,70 @@ fn calculate_length(s: String) -> (String, usize) {
 ```
 But this is too much ceremony and a lot of work for a concept that should be
 common. Luckily for us, Rust has a feature for using a value without
-trasnferring ownership, called *references*.
+transferring ownership, called *references*.
+
+
+## References and Borrowing
+The issue with the tuple example abow is that we have to return the `String` to
+the calling function so we can still use the `String` after the call to
+`calculate_length`, because the `String` was moved into `calculate_length`.
+Instead, we can provide a reference to the `String` value. A *reference* is
+like a pointer in that it's an address we can follow to access the data stored
+at that address; that data is owned by some other variable. Unlike a pointer, a
+reference is guaranteed to point to a valid value of a particular type for the
+life of that reference.
+
+
+Here is how you would define and use a `calculate_length` function that has a
+reference to an object as a parameter instead of taking ownership of the value:
+```rust
+fn main() {
+    let s1 = String::from("hello");
+
+    let len = calculate_length(&s1);
+
+    println!("The length of '{}' is {}.", s1, len);
+}
+
+fn calculate_length(s: &String) -> usize {
+    s.len()
+}
+```
+The `&s1` syntax lets us create a reference that *refers* to the value of `s1`
+but does not own it. Because it does not worn it, the value it points to will
+not be dropped when the reference stops being used.
+
+
+The scope in which the variable `s` is valid is the same as any function
+parameter's scope, but the value pointed to by the reference is not dropped
+when `s` stops being used because `s` doesn't have ownership. When functions
+have references as parameters instead of actual values, we won't need to return
+the values in order to give back ownership, because we never had ownership.
+
+> We call the action of creating a reference *borrowing*. As in real life, if a
+person owns something, you can borrow it from them. When you're done, you have
+to give it back. You don't own it.
+
+## Mutable References
+Just as variables are immutable by default, so are references. But we can
+modify the above code to allow us to modify a borrowed value with just a few
+small tweaks that use, instead, a *mutable reference*:
+```rust
+fn main() {
+    let mut s = String::from("hello");
+
+    change(&mut s);
+}
+
+fn change(some_string: &mut String) {
+    some_string.push_str(", world!");
+}
+```
+Mutable references have one big restriction: if you have a mutable reference to
+a value, you can have no other references to that value. We *also* cannot have
+a mutable reference while we have an immutable one to the same value.
+
+
+## The Slice Type
+*Slices* let you reference a contiguous sequence of elements in a collection
+rather than the whole collection.
