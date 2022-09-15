@@ -374,4 +374,98 @@ a mutable reference while we have an immutable one to the same value.
 
 ## The Slice Type
 *Slices* let you reference a contiguous sequence of elements in a collection
-rather than the whole collection.
+rather than the whole collection. A slice is a kind of reference, so it does
+not have ownership.
+
+
+Now we set up a small programming problem: write a function that takes a string
+of words separated by spaces and returns the first word it finds in that
+string. If the function doesn't find a space in the string, the whole string
+must be one word, so the entire thing should be returned.
+
+
+Let's work through how we'd write the signature of this function without using
+slices, to understand the problem that slices will solve:
+```rust
+fn first_word(s: &String) -> ?
+```
+The `first_word` function has a `&String` as a parameter. We don't want
+ownership, so this is fine. But what should we return? We don't really have a
+way to talk about a *part* of a string. However, we could return the index of
+the end of the word, indicated by a space. Let's try that, as shown below:
+```rust
+fn first_word(s: &String) -> usize {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            i
+        }
+    }
+
+    s.len()
+}
+```
+Because we need to go through the `String` element by element and check whether
+a value is a space, we'll convert our `String` to an array of bytes using the
+`as_bytes` method. Next we create an iterator over the array of bytes using the
+`iter` method. 
+
+
+The `enumerate` method returns a tuple, and as such, we can use patterns to
+deconstruct it. Because we get a reference to the element from
+`.iter().enumerate()`, we use `&` in the pattern.
+
+### String Slices
+A *string slice* is a reference to part of a `String`, and it can look like:
+```rust
+let s = String::from("hello world");
+let hello = &s[0..5];
+let world = &s[6..11];
+```
+Rather than a reference to the entire `String`, `hello` is a reference to a
+portion of the `String` specified in the extra `[0..5]` bit.
+
+
+With this newfound information, let's rewrite `first_word` to return a slice.
+The type that signifies "string slice" is written as `&str`:
+```rust
+fn first_word(s: &String) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            &s[0..i]
+        }
+    }
+
+    &s[..]
+}
+```
+
+### Other Slices
+String slices, as you might understand, are specific to strings. But there's a
+more general slice type, too. Consider this array:
+```rust
+let a = [1, 2, 3, 4, 5];
+```
+Just as we might want to refer to a part of a string, we might want to refer to
+a part of an array. We'd do so like this:
+```rust
+let a = [1, 2, 3, 4, 5];
+
+let slice = &a[1..3];
+
+assert_eq!(slice, &[2, 3]);
+```
+This slice has the type `&[i32]`. It works the same was as string slices do, by
+storing a reference to the first element and a length.
+
+
+## Summary
+The concepts of ownership, borrowing, and slices ensure memory safety in Rust
+program as compile time. The Rust language gives you control over your memory
+usage in the same way as other systems programming languages, but having the
+owner of data automatically clean up that data when the owner goes out of scope
+means you don't have to write and ebug extra code to get this control.
+
